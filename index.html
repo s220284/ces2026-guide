@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CES 2026 Tour Guide | Shelly Palmer</title>
+    <style>
+        /* CSS Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --text: #eaeaea;
+            --text-muted: #a0a0a0;
+            --bg: #0f0f1a;
+            --card-bg: #1a1a2e;
+            --border: #2a2a4a;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --north-hall: #3b82f6;
+            --central-hall: #8b5cf6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 0.75rem 1rem;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-link.north {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--north-hall);
+            border: 1px solid var(--north-hall);
+        }
+
+        .nav-link.central {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--central-hall);
+            border: 1px solid var(--central-hall);
+        }
+
+        .nav-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 1.5rem 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--bg) 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero .dates {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header.north {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);
+            border-left: 4px solid var(--north-hall);
+        }
+
+        .section-header.central {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, transparent 100%);
+            border-left: 4px solid var(--central-hall);
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header.north h2 { color: var(--north-hall); }
+        .section-header.central h2 { color: var(--central-hall); }
+
+        /* Highlights Cards */
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .highlight-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .highlight-card h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card h3::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--secondary);
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        td:first-child {
+            font-weight: 600;
+        }
+
+        .booth-tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: rgba(233, 69, 96, 0.2);
+            color: var(--accent);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Company Cards */
+        .company-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .company-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .company-header:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .company-header.north {
+            border-left: 4px solid var(--north-hall);
+        }
+
+        .company-header.central {
+            border-left: 4px solid var(--central-hall);
+        }
+
+        .company-title {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .company-title h3 {
+            font-size: 1.3rem;
+            color: var(--text);
+        }
+
+        .company-title .meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .company-title .meta .booth {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+
+        .company-card.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .company-content {
+            display: none;
+            padding: 0 1.5rem 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .company-card.expanded .company-content {
+            display: block;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin: 1.5rem 0;
+        }
+
+        .content-section h4 {
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .content-section p {
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .content-section li {
+            padding: 0.4rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-muted);
+        }
+
+        .content-section li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.9rem;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        /* Talking Points */
+        .talking-points {
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(233, 69, 96, 0.2);
+        }
+
+        .talking-points h4 {
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .talking-points ol {
+            padding-left: 1.25rem;
+            color: var(--text);
+        }
+
+        .talking-points li {
+            margin-bottom: 0.5rem;
+        }
+
+        .question {
+            background: var(--secondary);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            margin-top: 0.75rem;
+            font-style: italic;
+            color: var(--warning);
+        }
+
+        .question::before {
+            content: 'Ask: ';
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        /* Press Schedule */
+        .press-schedule {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .press-schedule h3 {
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        .press-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .press-item:last-child {
+            border-bottom: none;
+        }
+
+        .press-time {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Tips Section */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tip-card {
+            background: var(--secondary);
+            border-radius: 8px;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+        }
+
+        .tip-card h4 {
+            color: var(--success);
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .tip-card ul {
+            list-style: none;
+        }
+
+        .tip-card li {
+            padding: 0.3rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Expand All Button */
+        .expand-controls {
+            text-align: center;
+            margin: 1rem 0 2rem;
+        }
+
+        .expand-btn {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-content {
+                justify-content: center;
+            }
+
+            .nav-logo {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 0.5rem;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+
+            .hero {
+                padding-top: 8rem;
+            }
+
+            .company-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .toggle-icon {
+                position: absolute;
+                right: 1rem;
+                top: 1.5rem;
+            }
+
+            table {
+                font-size: 0.8rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .nav, .expand-controls {
+                display: none;
+            }
+
+            .company-content {
+                display: block !important;
+            }
+
+            .company-card {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="#" class="nav-logo">CES 2026 Tour Guide</a>
+            <div class="nav-links">
+                <a href="#north-hall" class="nav-link north">North Hall</a>
+                <a href="#central-hall" class="nav-link central">Central Hall</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+        <h1>CES 2026 Complete Tour Guide</h1>
+        <p class="subtitle">Las Vegas Convention Center | Prepared by Shelly Palmer</p>
+        <span class="dates">January 6-9, 2026</span>
+    </header>
+
+    <!-- NORTH HALL SECTION -->
+    <section id="north-hall">
+        <div class="section-header north">
+            <h2>Part 1: North Hall</h2>
+            <p>15 Stops | Robotics, Energy, Consumer Tech</p>
+        </div>
+
+        <div class="container">
+            <!-- North Hall Highlights -->
+            <div class="highlights">
+                <div class="highlight-card">
+                    <h3>Robotics Stars</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <tr><td><strong>Unitree G1</strong></td><td>Boxing humanoid, $9K-$129K</td></tr>
+                            <tr><td><strong>Richtech</strong></td><td>ADAM barista + Dex humanoid</td></tr>
+                            <tr><td><strong>NEURA</strong></td><td>MiPA folds laundry</td></tr>
+                            <tr><td><strong>Galbot</strong></td><td>$300M funding, thousands deployed</td></tr>
+                            <tr><td><strong>Allegro Hand</strong></td><td>NEW 2026 model reveal</td></tr>
+                            <tr><td><strong>Rover X1</strong></td><td>$1,030 robot dog</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="highlight-card">
+                    <h3>Fusion Energy Debuts at CES</h3>
+                    <p><strong>Commonwealth Fusion</strong> (Siemens Booth 8725)</p>
+                    <ul>
+                        <li>CEO keynote with Siemens CEO (Jan 6, 8:30am)</li>
+                        <li>First plasma from SPARC expected THIS YEAR</li>
+                        <li>First fusion plant: Virginia, 400MW</li>
+                        <li>$3B raised - biggest fusion startup globally</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-card">
+                    <h3>Commercial Robots</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <tr><td><strong>Primech AI</strong></td><td>Booth 8935</td><td>Hytron bathroom robot, 99% bacterial kill</td></tr>
+                            <tr><td><strong>TransAI</strong></td><td>Booth 9550</td><td>On-device AI note taker</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="highlight-card">
+                    <h3>Consumer Tech</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <tr><td><strong>Jackery</strong></td><td>Explorer 1500 Ultra + Solar Mars Bot</td><td>$899</td></tr>
+                            <tr><td><strong>Seestar</strong></td><td>S30 Pro smart telescope</td><td>$549</td></tr>
+                            <tr><td><strong>Segway</strong></td><td>Electric dirt bikes + Myon e-bike</td><td>TBA</td></tr>
+                            <tr><td><strong>Navimow</strong></td><td>Wire-free robotic mowers</td><td>TBD</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- North Hall Route Overview -->
+            <h3 style="margin-bottom: 1rem; color: var(--north-hall);">Tour Route Overview</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Company</th>
+                            <th>Category</th>
+                            <th>Booth</th>
+                            <th>Headline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Segway</td><td>Mobility</td><td>West Hall</td><td>Electric dirt bikes + Myon e-bike with radar</td></tr>
+                        <tr><td>2</td><td>Jackery</td><td>Power</td><td>TBD</td><td>$899 rugged power station + solar robot</td></tr>
+                        <tr><td>3</td><td>Navimow</td><td>Lawn Care</td><td><span class="booth-tag">9615A</span></td><td>Wire-free robotic mowers</td></tr>
+                        <tr><td>4</td><td>TransAI</td><td>AI Devices</td><td><span class="booth-tag">9550</span></td><td>On-device AI meeting note taker</td></tr>
+                        <tr><td>5</td><td>Allegro Hand</td><td>Robotics</td><td>TBD</td><td>Dexterous manipulation, new model reveal</td></tr>
+                        <tr><td>6</td><td>Rover X1 / Dobot</td><td>Robotics</td><td>TBD</td><td>$1,000 robot dog for the home</td></tr>
+                        <tr><td>7</td><td>Galbot</td><td>Humanoid</td><td>TBD</td><td>G1 mobile manipulator, $300M funding</td></tr>
+                        <tr><td>8</td><td>Persona AI</td><td>Humanoid</td><td>TBD</td><td>Heavy industry humanoid robot</td></tr>
+                        <tr><td>9</td><td>Unitree</td><td>Humanoid</td><td>TBD</td><td>G1 boxing robots demonstration</td></tr>
+                        <tr><td>10</td><td>Seestar (ZWO)</td><td>Consumer</td><td>TBD</td><td>S30 Pro smart telescope launch</td></tr>
+                        <tr><td>11</td><td>Primech AI</td><td>Commercial</td><td><span class="booth-tag">8935</span></td><td>Hytron bathroom cleaning robot</td></tr>
+                        <tr><td>12</td><td>Commonwealth Fusion</td><td>Energy</td><td><span class="booth-tag">8725</span></td><td>First fusion company at CES</td></tr>
+                        <tr><td>13</td><td>Richtech Robotics</td><td>Commercial</td><td><span class="booth-tag">8447</span></td><td>ADAM barista + Dex humanoid debut</td></tr>
+                        <tr><td>14</td><td>NEURA Robotics</td><td>Humanoid</td><td><span class="booth-tag">8331</span></td><td>MiPA laundry-folding robot</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="expand-controls">
+                <button class="expand-btn" onclick="toggleAll('north')">Expand All North Hall Details</button>
+            </div>
+
+            <!-- North Hall Company Cards -->
+
+            <!-- 1. Segway -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>1. Segway</h3>
+                        <span class="meta">Mobility | <span class="booth">West Hall</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Evolved from personal transporters into a diversified mobility company spanning e-bikes, electric motorcycles, robotic lawn mowers, and now electric dirt bikes.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Exhibits</h4>
+                        <p><strong>Electric Dirt Bikes (NEW)</strong></p>
+                        <ul>
+                            <li>Entirely fresh lineup unveiled January 6</li>
+                            <li>Prototype: 50 kW (67 hp) motor, 140 kph (87 mph) top speed</li>
+                            <li>Survived 1,000+ km desert testing</li>
+                        </ul>
+                        <p><strong>Myon E-Bike (NEW)</strong></p>
+                        <ul>
+                            <li>Commuter-focused electric bicycle</li>
+                            <li>Optional rear-facing radar safety system</li>
+                            <li>Goes on sale January 6</li>
+                        </ul>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Diversification story:</strong> From Segway scooters to full mobility ecosystem</li>
+                            <li><strong>Safety innovation:</strong> Rear radar on commuter e-bike is genuinely novel</li>
+                            <li><strong>Electric off-road:</strong> Dirt bikes signal serious play in recreational EVs</li>
+                        </ol>
+                        <div class="question">"What's the battery range on the dirt bikes?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Jackery -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>2. Jackery</h3>
+                        <span class="meta">Portable Power & Solar | <span class="booth">TBD</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Pioneer in portable power stations and solar generators. 10th anniversary since first portable power station.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Exhibits</h4>
+                        <p><strong>Explorer 1500 Ultra ($899 early bird, $1,399 regular)</strong></p>
+                        <ul>
+                            <li>Lightest IP65 all-weather power station in class</li>
+                            <li>50% smaller and lighter than competitors</li>
+                            <li>1,536Wh LiFePO4 battery, 4,000 cycles</li>
+                            <li>Withstands magnitude-9 earthquake forces</li>
+                            <li>Operates 5°F to 113°F</li>
+                        </ul>
+                        <p><strong>Solar Gazebo</strong></p>
+                        <ul>
+                            <li>Outdoor structure with integrated solar panels</li>
+                            <li>2,000W solar capacity, up to 10 kWh/day</li>
+                        </ul>
+                        <p><strong>Solar Mars Bot (World's First)</strong></p>
+                        <ul>
+                            <li>Autonomous solar robot inspired by NASA Mars Rover</li>
+                            <li>AI computer vision, follows user automatically</li>
+                            <li>300W auto-retractable solar panels</li>
+                        </ul>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>From camping to home backup:</strong> Strategic pivot to essential home infrastructure</li>
+                            <li><strong>The robot angle:</strong> Solar Mars Bot is genuinely unique - robot that delivers power</li>
+                            <li><strong>Rugged certification:</strong> IP65 rating matters for emergency/disaster use</li>
+                        </ol>
+                        <div class="question">"What's the deployment timeline for the Solar Gazebo?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Navimow -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>3. Navimow (Segway)</h3>
+                        <span class="meta">Lawn Care | <span class="booth">Booth 9615A</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Segway's robotic lawn mower division. Wire-free GPS-guided autonomous mowers. Global user base exceeds 150,000.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Exhibits</h4>
+                        <ul>
+                            <li>Latest wire-free robotic mowers</li>
+                            <li>Live demonstrations</li>
+                            <li>Giveaway: chance to win 2026 model</li>
+                            <li>X3 Series updates (3D camera + AI mapping, up to 2.5 acres)</li>
+                        </ul>
+                        <p><strong>Market Context:</strong> Robot lawn mower market: $10.62B by 2032, 12% CAGR</p>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Wire-free is the differentiator:</strong> Most competitors still require buried boundary wires</li>
+                            <li><strong>AI mapping:</strong> 3D camera vision vs. random-pattern competitors</li>
+                            <li><strong>Segway ecosystem:</strong> Connects to broader mobility strategy</li>
+                        </ol>
+                        <div class="question">"What new capabilities in 2026 models?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. TransAI -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>4. TransAI</h3>
+                        <span class="meta">AI Devices | <span class="booth">Booth 9550</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>AI meeting note-taking devices with on-device processing for privacy. Also makes real-time translation earbuds.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Exhibits</h4>
+                        <p><strong>AI Meeting Note Device (Exclusive Preview)</strong></p>
+                        <ul>
+                            <li>Captures voices, visuals, and context</li>
+                            <li>Converts to notes and action items instantly</li>
+                            <li><strong>Fully on-device processing</strong> (privacy advantage)</li>
+                            <li>Powered by NoteBrain - unified MoE model</li>
+                        </ul>
+                        <p><strong>Translation Products (Genie Series)</strong></p>
+                        <ul>
+                            <li>Real-time translation for calls and meetings</li>
+                            <li>MLTM AI: handles accents, dialects, slang</li>
+                        </ul>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>On-device = privacy:</strong> No cloud processing means sensitive content stays local</li>
+                            <li><strong>Mixture of Experts:</strong> Advanced AI architecture running locally</li>
+                            <li><strong>Multimodal capture:</strong> Voice + visual context is differentiated</li>
+                        </ol>
+                        <div class="question">"How does NoteBrain compare to cloud-based transcription accuracy?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Allegro Hand -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>5. Allegro Hand (Wonik Robotics)</h3>
+                        <span class="meta">Research Robotics | <span class="booth">TBD</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>High-performance robotic hands for research, automation, and intelligent manipulation. Four fingers, 16 independent torque-controlled joints.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Exhibits</h4>
+                        <p><strong>Dexterity Demonstration</strong></p>
+                        <ul>
+                            <li>Reinforcement learning deployed to physical robot</li>
+                            <li>Continuous object rotation with one hand without dropping</li>
+                        </ul>
+                        <p><strong>New Allegro Hand Model (WORLD PREMIERE)</strong></p>
+                        <ul>
+                            <li>2026 model unveiled on-site for first time</li>
+                            <li>Current specs: 4 fingers, 16 joints, holds up to 5kg</li>
+                        </ul>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Foundational technology:</strong> Allegro Hands power research at universities worldwide</li>
+                            <li><strong>RL to real world:</strong> Sim-to-real transfer is cutting edge</li>
+                            <li><strong>Humanoid enabler:</strong> These hands could go on humanoid robots</li>
+                        </ol>
+                        <div class="question">"What's new in the 2026 model?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Rover X1 -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>6. Rover X1 (Dobot)</h3>
+                        <span class="meta">Consumer Robotics | <span class="booth">TBD</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Dobot is China's largest collaborative robot manufacturer. Rose from Kickstarter to publicly traded since 2015.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>The Product: Rover X1 ($1,030 USD)</h4>
+                        <ul>
+                            <li><strong>Dual-Vision Tracking:</strong> Omnidirectional perception, real-time mapping</li>
+                            <li><strong>Hybrid Wheel-Leg Design:</strong> Rolling on smooth surfaces, legs for terrain</li>
+                            <li><strong>Smart Home Integration:</strong> Surveillance, personal assistant, companion</li>
+                        </ul>
+                        <p><strong>Competitive:</strong> $1,030 vs. Unitree Go2 at $1,600</p>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Price disruption:</strong> Undercuts Unitree significantly</li>
+                            <li><strong>Wheel-leg hybrid:</strong> Novel locomotion approach</li>
+                            <li><strong>Consumer vs. industrial:</strong> Positioned for homes, not warehouses</li>
+                        </ol>
+                        <div class="question">"What's the expected US availability date?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Galbot -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>7. Galbot</h3>
+                        <span class="meta">Humanoid Robotics | <span class="booth">TBD</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Chinese humanoid robot company. Recently secured $300M funding. Focused on industrial applications (warehouses, healthcare, retail).</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Exhibits</h4>
+                        <p><strong>G1 Mobile Manipulator</strong></p>
+                        <ul>
+                            <li>Designed for tough industrial tasks</li>
+                            <li>Healthcare and retail applications</li>
+                            <li>Thousands of units already produced and deployed</li>
+                        </ul>
+                        <p>Part of China's dominance (~60% of CES humanoid exhibitors)</p>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>$300M signals confidence:</strong> Major funding for humanoid startups</li>
+                            <li><strong>Production scale:</strong> Already at thousands of units (not prototypes)</li>
+                            <li><strong>China's humanoid push:</strong> National strategic priority</li>
+                        </ol>
+                        <div class="question">"What specific deployments are live today?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Persona AI -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>8. Persona AI</h3>
+                        <span class="meta">Humanoid / Heavy Industry | <span class="booth">TBD</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Founded by industry veterans from Figure AI and NASA. Focused on heavy industry applications.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026</h4>
+                        <ul>
+                            <li>Recently revealed first humanoid robot</li>
+                            <li>£33M (~$42M) funding round</li>
+                            <li>Targeting manufacturing, construction, logistics</li>
+                        </ul>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Figure AI pedigree:</strong> Founders bring serious humanoid experience</li>
+                            <li><strong>NASA connection:</strong> Credibility for complex manipulation</li>
+                            <li><strong>Heavy industry focus:</strong> Different from consumer/service robotics</li>
+                        </ol>
+                        <div class="question">"What's the first commercial deployment target?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Unitree G1 -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>9. Unitree G1 (Boxing Robots)</h3>
+                        <span class="meta">Humanoid Robotics | <span class="booth">TBD</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Leading Chinese robotics company. G1 is their compact humanoid famous for boxing demonstrations.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>The G1 Robot</h4>
+                        <ul>
+                            <li>77 lbs weight, 23 degrees of freedom</li>
+                            <li>Price: $8,990 to $128,900 depending on config</li>
+                            <li>Available in US via RoboStore</li>
+                        </ul>
+                        <p><strong>Boxing Capabilities:</strong></p>
+                        <ul>
+                            <li>Strikes stationary targets</li>
+                            <li>Sparring against human boxers</li>
+                            <li>Robot-vs-robot matches</li>
+                            <li>Punching, dodging, balance adjustments</li>
+                            <li>"Iron Fist King: Awakening" tournament (May 2025)</li>
+                        </ul>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Viral marketing genius:</strong> Boxing demos generate massive attention</li>
+                            <li><strong>Balance is the breakthrough:</strong> Maintaining stability during combat is hard</li>
+                            <li><strong>Price range:</strong> $9K entry point accessible for research</li>
+                        </ol>
+                        <div class="question">"What's next after boxing - practical applications?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Seestar -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>10. Seestar (ZWO)</h3>
+                        <span class="meta">Smart Telescopes | <span class="booth">TBD</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>ZWO makes smart telescopes that automate astrophotography. Select a target in the app, telescope locates, tracks, and captures automatically.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Products</h4>
+                        <p><strong>Seestar S30 Pro (NEW - Shipping Jan 31, 2026)</strong></p>
+                        <ul>
+                            <li>$549 early bird / $599 regular</li>
+                            <li>Dual-lens: 4K wide-angle + telephoto</li>
+                            <li>IMX585 sensor (4x larger than S30)</li>
+                            <li>Only 1.65 kg weight</li>
+                            <li>80,000+ deep-sky objects, 600,000+ stars</li>
+                            <li><strong>Telescope Network:</strong> Connect Seestars worldwide for remote control</li>
+                        </ul>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Democratizing astrophotography:</strong> What took $10K+ equipment now costs $599</li>
+                            <li><strong>Network effect:</strong> Telescope Network is genuinely innovative</li>
+                            <li><strong>AI automation:</strong> No expertise needed - point and shoot the cosmos</li>
+                        </ol>
+                        <div class="question">"What's the most popular target users photograph?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. Primech AI -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>11. Primech AI</h3>
+                        <span class="meta">Commercial Robotics | <span class="booth">Booth 8935</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Primech Holdings (Nasdaq: PMEC) - AI-powered hygienic robotics. Focused on commercial restroom cleaning.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Exhibit: HYTRON</h4>
+                        <p><strong>World's Most Advanced Autonomous Restroom Cleaning Robot</strong></p>
+                        <ul>
+                            <li><strong>Compact:</strong> &lt;16 inches wide - fits in toilet stalls</li>
+                            <li><strong>AI Platform:</strong> NVIDIA Jetson Orin Super</li>
+                            <li><strong>Chemical-free:</strong> Electrolyzed water technology</li>
+                            <li><strong>Verified:</strong> 99% bacterial reduction (tested)</li>
+                        </ul>
+                        <p><strong>Business Model:</strong> Robotics-as-a-Service (RaaS)</p>
+                        <p><strong>Timeline:</strong> Mass production Q1 2026. Already deployed in Singapore, Hong Kong, Macau.</p>
+                        <p><strong>Demo:</strong> Full mock restroom with live autonomous cleaning</p>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Labor shortage solution:</strong> Commercial restroom cleaning is hard to staff</li>
+                            <li><strong>Chemical-free matters:</strong> Lower costs + environmental impact</li>
+                            <li><strong>RaaS model:</strong> Enterprise-friendly deployment</li>
+                        </ol>
+                        <div class="question">"What's the TCO vs. human cleaning staff?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12. Commonwealth Fusion -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>12. Commonwealth Fusion Systems</h3>
+                        <span class="meta">Energy | <span class="booth">Booth 8725 (Siemens)</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>World's largest and leading private fusion energy company. Founded 2018. Raised ~$3B. Building first commercial fusion power plant.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Presence</h4>
+                        <p><strong>This is fusion energy's debut at CES</strong> - signals fusion moving from science project to commercial technology.</p>
+                        <ul>
+                            <li><strong>Opening Keynote (Jan 6, 8:30am):</strong> CEO Bob Mumgaard with Siemens CEO</li>
+                            <li><strong>Booth Demo:</strong> Up-close look at Star Builders technology</li>
+                            <li><strong>Comedy Show (Jan 7):</strong> Live fusion comedy at Fontainebleau</li>
+                        </ul>
+                        <p><strong>The Technology: SPARC</strong></p>
+                        <ul>
+                            <li>First plasma expected 2026</li>
+                            <li>First machine to produce more power than it consumes</li>
+                        </ul>
+                        <p><strong>First Fusion Power Plant: Chesterfield County, Virginia</strong></p>
+                        <ul>
+                            <li>Online: Early 2030s</li>
+                            <li>Output: ~400 megawatts (powers 150,000 homes)</li>
+                        </ul>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Why CES?</strong> Fusion needs to be seen as tech, not just science</li>
+                            <li><strong>2026 is the year:</strong> SPARC first plasma this year</li>
+                            <li><strong>AI connection:</strong> Data centers need clean baseload power</li>
+                            <li><strong>$3B raised:</strong> Most-funded fusion startup globally</li>
+                        </ol>
+                        <div class="question">"What's the path from SPARC to Virginia plant?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 13. Richtech Robotics -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>13. Richtech Robotics</h3>
+                        <span class="meta">Commercial Robotics | <span class="booth">Booth 8447</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Richtech Robotics (Nasdaq: RR) develops commercial service robots. Three pillars: Industrial, Commercial, Data Services.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Exhibits</h4>
+                        <p><strong>DEX (WORLD PREMIERE)</strong></p>
+                        <ul>
+                            <li>Mobile humanoid robot</li>
+                            <li>NVIDIA Jetson Thor powered</li>
+                            <li>Trained in NVIDIA Isaac Sim and Lab</li>
+                            <li>4-hour single-charge operation</li>
+                        </ul>
+                        <p><strong>Robot Lineup Demo:</strong></p>
+                        <div class="table-wrapper">
+                            <table>
+                                <tr><td><strong>ADAM</strong></td><td>Barista (coffee making)</td></tr>
+                                <tr><td><strong>Matradee Plus</strong></td><td>Food delivery</td></tr>
+                                <tr><td><strong>Titan</strong></td><td>Logistics delivery</td></tr>
+                                <tr><td><strong>Scorpion</strong></td><td>Visual monitoring</td></tr>
+                                <tr><td><strong>Dex (NEW)</strong></td><td>Humanoid general purpose</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Deployed today:</strong> ADAM baristas already in commercial locations</li>
+                            <li><strong>Humanoid progression:</strong> Dex evolves from single-task to general purpose</li>
+                            <li><strong>NVIDIA partnership:</strong> Deep Isaac simulation integration</li>
+                        </ol>
+                        <div class="question">"Where are ADAM baristas deployed today?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 14. NEURA Robotics -->
+            <div class="company-card" data-hall="north">
+                <div class="company-header north" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>14. NEURA Robotics</h3>
+                        <span class="meta">Humanoid Robotics | <span class="booth">Booth 8331</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>German cognitive robotics company. Building robots that learn collectively via Neuraverse platform and Aura AI.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Exhibits</h4>
+                        <p><strong>MiPA (Multipurpose Assistant)</strong></p>
+                        <ul>
+                            <li>Personal care and household tasks</li>
+                            <li>Meal delivery, cooking, picking items, <strong>folding laundry</strong>, dishes</li>
+                            <li>Detects people, recognizes voice/gestures</li>
+                            <li>Integrates with wearables</li>
+                        </ul>
+                        <p><strong>4NE1 (Industrial Humanoid)</strong> - Next-gen, multiple form factors</p>
+                        <p><strong>Neuraverse Platform</strong> - Shared learning across all NEURA robots</p>
+                        <p>CEO David Reger + guests hosting daily talks on booth stage</p>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>German engineering:</strong> European precision to humanoids</li>
+                            <li><strong>Collective learning:</strong> Every robot improves all robots</li>
+                            <li><strong>Laundry is the killer app:</strong> Folding laundry is genuinely hard for robots</li>
+                        </ol>
+                        <div class="question">"How does collective learning work in practice?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- North Hall Tips -->
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h4>Time Management</h4>
+                    <ul>
+                        <li>15-20 minutes per stop</li>
+                        <li>Total route: 4-5 hours</li>
+                        <li>Best time: Morning</li>
+                    </ul>
+                </div>
+                <div class="tip-card">
+                    <h4>Must-See Demos</h4>
+                    <ul>
+                        <li>Unitree G1 boxing</li>
+                        <li>Primech Hytron bathroom</li>
+                        <li>Allegro Hand RL dexterity</li>
+                        <li>Jackery Solar Mars Bot</li>
+                    </ul>
+                </div>
+                <div class="tip-card">
+                    <h4>Photo Ops</h4>
+                    <ul>
+                        <li>Unitree boxing match</li>
+                        <li>Richtech Dex humanoid</li>
+                        <li>Jackery Solar Mars Bot</li>
+                        <li>Commonwealth Fusion SPARC</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CENTRAL HALL SECTION -->
+    <section id="central-hall">
+        <div class="section-header central">
+            <h2>Part 2: Central Hall</h2>
+            <p>8 Stops | Consumer Electronics, TVs, Automotive</p>
+        </div>
+
+        <div class="container">
+            <!-- Central Hall Highlights -->
+            <div class="highlights">
+                <div class="highlight-card">
+                    <h3>LG CLOiD Robot</h3>
+                    <p><strong>Booth 15004</strong></p>
+                    <ul>
+                        <li>Humanoid home robot: 7-DOF arms, 5-finger hands</li>
+                        <li>Live demos: Makes breakfast, folds laundry</li>
+                        <li>"Zero Labor Home" vision</li>
+                        <li>Invested in Figure AI, Agibot, ROBOTIS</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-card">
+                    <h3>Sony/Honda AFEELA</h3>
+                    <p><strong>Booth 20800</strong></p>
+                    <ul>
+                        <li>Pre-production vehicles + NEW concept model</li>
+                        <li>$89,900 starting, 300-mile range, Level 3</li>
+                        <li><strong>PlayStation Remote Play</strong> (world first)</li>
+                        <li>California deliveries start 2026</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-card">
+                    <h3>TV Brightness War</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <tr><td><strong>TCL X11L</strong></td><td><strong>10,000 nits</strong></td></tr>
+                            <tr><td><strong>Hisense 116UXS</strong></td><td>RGB MiniLED evo</td></tr>
+                            <tr><td><strong>LG OLED G6</strong></td><td>~3,300 nits tandem</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="highlight-card">
+                    <h3>Hisense FollowMe TV</h3>
+                    <p><strong>Booth 17704</strong></p>
+                    <ul>
+                        <li>32" 4K touchscreen on wheels</li>
+                        <li>Literally follows you room to room</li>
+                        <li>163MX MicroLED: Best of Innovation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Press Schedule -->
+            <div class="press-schedule">
+                <h3>Press Conferences (Media Day - Jan 5)</h3>
+                <div class="press-item">
+                    <span class="press-time">12:00 PM ET</span>
+                    <span>Bosch - YouTube/Bosch press site</span>
+                </div>
+                <div class="press-item">
+                    <span class="press-time">8:00 PM ET</span>
+                    <span>Sony Honda Mobility - AFEELA YouTube</span>
+                </div>
+            </div>
+
+            <!-- Central Hall Route Overview -->
+            <h3 style="margin-bottom: 1rem; color: var(--central-hall);">Tour Route Overview</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Company</th>
+                            <th>Category</th>
+                            <th>Booth</th>
+                            <th>Headline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>LG</td><td>Consumer Electronics</td><td><span class="booth-tag">15004</span></td><td>CLOiD home robot + OLED G6/W6 TVs</td></tr>
+                        <tr><td>2</td><td>Neewer</td><td>Photography/Video</td><td>TBD</td><td>LED lighting for creators</td></tr>
+                        <tr><td>3</td><td>Shokz</td><td>Audio</td><td><span class="booth-tag">15823</span></td><td>NEW flagship + OpenSound tech</td></tr>
+                        <tr><td>4</td><td>Bosch</td><td>Automotive/Smart Home</td><td><span class="booth-tag">16203</span></td><td>AI-powered car cockpit</td></tr>
+                        <tr><td>5</td><td>Panasonic</td><td>B2B/AI Infrastructure</td><td><span class="booth-tag">16605</span></td><td>Data center + warehouse automation</td></tr>
+                        <tr><td>6</td><td>Hisense</td><td>TVs/Displays</td><td><span class="booth-tag">17704</span></td><td>10,000 nit X11L + FollowMe TV</td></tr>
+                        <tr><td>7</td><td>TCL</td><td>TVs/Displays</td><td>TBD</td><td>10,000 nit X11L + RGB Mini-LED</td></tr>
+                        <tr><td>8</td><td>Sony/Honda Mobility</td><td>Automotive</td><td><span class="booth-tag">20800</span></td><td>AFEELA 1 + new concept</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="expand-controls">
+                <button class="expand-btn" onclick="toggleAll('central')">Expand All Central Hall Details</button>
+            </div>
+
+            <!-- Central Hall Company Cards -->
+
+            <!-- 1. LG -->
+            <div class="company-card" data-hall="central">
+                <div class="company-header central" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>1. LG Electronics</h3>
+                        <span class="meta">Consumer Electronics | <span class="booth">Booth 15004</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Korean conglomerate spanning consumer electronics, home appliances, displays, and now robotics. Market leader in OLED TVs.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CLOiD Home Robot (HEADLINE)</h4>
+                        <p><strong>Vision: "Zero Labor Home, Makes Quality Time"</strong></p>
+                        <p><strong>Hardware:</strong></p>
+                        <ul>
+                            <li>Two articulated arms with 7 degrees of freedom each</li>
+                            <li>Five actuated fingers per hand for precise manipulation</li>
+                            <li>Wheeled base using LG autonomous driving tech</li>
+                        </ul>
+                        <p><strong>AI Technology:</strong> "Affectionate Intelligence" - Physical AI bridging VLM and VLA</p>
+                        <p><strong>Live Demos:</strong> Retrieves milk, places croissant in oven, initiates laundry, folds garments</p>
+                        <p><strong>Strategic Investments:</strong> ROBOTIS (7.36% equity), Figure AI, Agibot, Dyna Robotics</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>TV Lineup (Leaked/Expected)</h4>
+                        <div class="table-wrapper">
+                            <table>
+                                <tr><td><strong>OLED G6</strong></td><td>RGB Tandem WOLED</td><td>~3,300 nits</td></tr>
+                                <tr><td><strong>OLED W6</strong></td><td>Wallpaper revival</td><td>9.9mm ultra-thin</td></tr>
+                                <tr><td><strong>OLED M6</strong></td><td>Wireless</td><td>Offboard processor box</td></tr>
+                                <tr><td><strong>SIGNATURE OLED T</strong></td><td>Transparent + Wireless</td><td>77" 4K, 30ft wireless</td></tr>
+                            </table>
+                        </div>
+                        <p><strong>Awards:</strong> LG SIGNATURE OLED T: Best of Innovation (4th consecutive year)</p>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Robot strategy is serious:</strong> $3B+ in investments, internal lab, partnerships</li>
+                            <li><strong>Zero Labor Home:</strong> LG positioning for post-appliance future</li>
+                            <li><strong>OLED dominance:</strong> 4th consecutive Best of Innovation</li>
+                            <li><strong>Transparent TV is real:</strong> SIGNATURE OLED T shipping in 2026</li>
+                        </ol>
+                        <div class="question">"What's the timeline for CLOiD commercial availability?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Neewer -->
+            <div class="company-card" data-hall="central">
+                <div class="company-header central" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>2. Neewer</h3>
+                        <span class="meta">Photography & Video Lighting | <span class="booth">TBD</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Chinese photography equipment brand offering LED lights, ring lights, tripods, flashes, lenses, and studio accessories. Popular among YouTubers, streamers, and content creators.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>Key Products</h4>
+                        <p><strong>FS600C RGB COB Light</strong></p>
+                        <ul>
+                            <li>600W output</li>
+                            <li>52,500 Lux/1m at 4400K with reflector</li>
+                            <li>Full RGB color control</li>
+                        </ul>
+                        <p><strong>NL660 Bi-Color Panel</strong></p>
+                        <ul>
+                            <li>3200-5600K color temperature</li>
+                            <li>CRI 96+, Dimmable</li>
+                        </ul>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Creator economy play:</strong> Neewer rides the YouTube/TikTok wave</li>
+                            <li><strong>Price disruption:</strong> Professional-quality at prosumer prices</li>
+                            <li><strong>RGB trend:</strong> RGB lighting for streaming/gaming content</li>
+                        </ol>
+                        <div class="question">"What's new for 2026 in the COB light category?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Shokz -->
+            <div class="company-card" data-hall="central">
+                <div class="company-header central" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>3. Shokz</h3>
+                        <span class="meta">Audio | <span class="booth">Booth 15823</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Pioneer in bone conduction headphones (formerly AfterShokz). Open-ear design for situational awareness during sports, commuting.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Announcements</h4>
+                        <p><strong>NEW Flagship Product (PRE-ORDER JAN 6)</strong></p>
+                        <ul>
+                            <li>First model featuring OpenSound technology</li>
+                            <li>Pre-orders begin January 6, 2026</li>
+                        </ul>
+                        <p><strong>OpenSound Technology Platform</strong></p>
+                        <ul>
+                            <li>SuperBoost Dual-Diaphragm Driver</li>
+                            <li>Resonance point reduced to 150Hz</li>
+                            <li><strong>50% stronger bass</strong> vs. previous gen</li>
+                            <li>Adaptive algorithms, leakage control</li>
+                        </ul>
+                        <p><strong>OpenDots ONE</strong> - CES 2026 Innovation Award Winner</p>
+                        <ul>
+                            <li>Minimalist clip-on design</li>
+                            <li>Clips onto outer ear</li>
+                        </ul>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Category creator:</strong> Shokz invented consumer bone conduction</li>
+                            <li><strong>OpenSound platform:</strong> Technology licensing potential</li>
+                            <li><strong>50% bass improvement:</strong> Addresses biggest criticism</li>
+                            <li><strong>Fitness market dominance:</strong> Runners, cyclists, outdoor athletes</li>
+                        </ol>
+                        <div class="question">"What markets beyond fitness are you targeting?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Bosch -->
+            <div class="company-card" data-hall="central">
+                <div class="company-header central" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>4. Bosch</h3>
+                        <span class="meta">Automotive/Smart Home | <span class="booth">Booth 16203</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>German engineering conglomerate. Global leader in automotive components, power tools, home appliances, industrial technology.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>AI-Powered Car Cockpit (HEADLINE)</h4>
+                        <p><strong>Available for licensing to automakers</strong></p>
+                        <p><strong>Key Integrations:</strong></p>
+                        <ul>
+                            <li><strong>Microsoft:</strong> Voice commands initiate Teams calls</li>
+                            <li><strong>NVIDIA:</strong> Real-time sensor processing</li>
+                        </ul>
+                        <p><strong>Capabilities:</strong></p>
+                        <ul>
+                            <li>Automatic adaptive cruise control</li>
+                            <li>Real-time environmental awareness</li>
+                            <li>Voice-activated features</li>
+                        </ul>
+                        <p><strong>Business Model:</strong> Licensing to OEMs (not consumer products)</p>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>B2B is the business:</strong> Bosch sells to carmakers, not consumers</li>
+                            <li><strong>Microsoft + NVIDIA:</strong> Major tech alliances in one cockpit</li>
+                            <li><strong>Licensing model:</strong> Revenue from every car using their tech</li>
+                            <li><strong>Automotive dominance:</strong> Bosch is in virtually every car</li>
+                        </ol>
+                        <div class="question">"Which OEMs are already signed up for the AI cockpit?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Panasonic -->
+            <div class="company-card" data-hall="central">
+                <div class="company-header central" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>5. Panasonic</h3>
+                        <span class="meta">B2B/AI Infrastructure | <span class="booth">Booth 16605</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Japanese conglomerate spanning consumer electronics, automotive, industrial solutions. At CES, focusing heavily on B2B.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>Theme: "The Future We Make"</h4>
+                        <p><strong>AI Infrastructure Solutions (HEADLINE)</strong></p>
+                        <ul>
+                            <li>Distributed power system for server racks</li>
+                            <li>"Safety-designed" and "high-power" units</li>
+                            <li>Backup power + peak shaving</li>
+                            <li>Addresses exponential AI demand growth</li>
+                        </ul>
+                        <p><strong>Blue Yonder (Supply Chain AI)</strong></p>
+                        <ul>
+                            <li>Interactive 3D warehouse journey demo</li>
+                            <li>Camera vision, robotics, RFID, sensors</li>
+                        </ul>
+                        <p><strong>Hussmann (Refrigeration)</strong> - Natural R-290 refrigerant, energy efficiency</p>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>AI infrastructure:</strong> Data centers need power - Panasonic has solutions</li>
+                            <li><strong>Blue Yonder:</strong> Supply chain AI acquisition paying off</li>
+                            <li><strong>50+ years at CES:</strong> Exhibiting since the beginning</li>
+                            <li><strong>B2B pivot:</strong> Consumer electronics less prominent</li>
+                        </ol>
+                        <div class="question">"How does your data center solution compare to competitors on efficiency?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Hisense -->
+            <div class="company-card" data-hall="central">
+                <div class="company-header central" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>6. Hisense</h3>
+                        <span class="meta">TVs/Displays | <span class="booth">Booth 17704</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Chinese electronics company. #2 TV manufacturer globally. Known for value-oriented pricing with premium features.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>Flagship TVs</h4>
+                        <div class="table-wrapper">
+                            <table>
+                                <tr><td><strong>163MX</strong></td><td>MicroLED RGBY</td><td>163", 100% BT.2020</td><td>Best of Innovation</td></tr>
+                                <tr><td><strong>116UXS</strong></td><td>RGB MiniLED evo</td><td>4th color (cyan)</td><td>Flagship</td></tr>
+                                <tr><td><strong>UR9 Series</strong></td><td>RGB MiniLED</td><td>55-100"</td><td>Premium</td></tr>
+                                <tr><td><strong>UR8 Series</strong></td><td>RGB MiniLED</td><td>Approachable price</td><td>Mainstream</td></tr>
+                            </table>
+                        </div>
+                        <p><strong>S6 FollowMe (UNIQUE)</strong></p>
+                        <ul>
+                            <li>32-inch 4K touchscreen on wheels</li>
+                            <li>Adjustable height pedestal</li>
+                            <li>Rolls room to room</li>
+                        </ul>
+                        <p><strong>Technology Firsts:</strong> Dolby Vision 2 (first to deliver), Four-Primary Color (RGBY, RGB+Cyan)</p>
+                        <p><strong>Laser Projectors:</strong> XR10 (6,000 lumens), PX4-PRO (UST, 200")</p>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>MicroLED arrives:</strong> 163MX brings MicroLED to consumers</li>
+                            <li><strong>Four-primary color:</strong> RGBY/RGBC vs. traditional RGB</li>
+                            <li><strong>FollowMe conversation starter:</strong> Portable TV on wheels</li>
+                            <li><strong>Dolby Vision 2 first mover:</strong> Partnership advantage</li>
+                        </ol>
+                        <div class="question">"What's the price point for the 163MX MicroLED?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. TCL -->
+            <div class="company-card" data-hall="central">
+                <div class="company-header central" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>7. TCL</h3>
+                        <span class="meta">TVs/Displays | <span class="booth">TBD</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>#1 in Mini LED TVs globally. #1 in ultra-large TVs. Parent company of TCL CSOT (display panel manufacturer).</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>Theme: "Display the Future"</h4>
+                        <p><strong>TV Announcements</strong></p>
+                        <div class="table-wrapper">
+                            <table>
+                                <tr><td><strong>X11L</strong></td><td>Mini-LED</td><td><strong>10,000 nits</strong></td><td>Flagship</td></tr>
+                                <tr><td><strong>Q10M Ultra</strong></td><td>RGB Mini-LED</td><td>Mainstream RGB debut</td><td>~$3,935 85"</td></tr>
+                                <tr><td><strong>Q9M</strong></td><td>RGB Mini-LED</td><td>Entry RGB</td><td>TBD</td></tr>
+                            </table>
+                        </div>
+                        <p><strong>SQD-Mini LED Technology - 5 Core Advantages:</strong></p>
+                        <ul>
+                            <li>All-Scene Wide Color Gamut</li>
+                            <li>No color crosstalk</li>
+                            <li>More local dimming zones</li>
+                            <li>Higher brightness</li>
+                            <li>Ultra-slim form factor</li>
+                        </ul>
+                        <p><strong>Beyond TVs:</strong> NXTPAPER eye-care smartphones, eNote tablets, AR glasses, smart home appliances</p>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>10,000 nits is insane:</strong> X11L pushes brightness boundaries</li>
+                            <li><strong>RGB Mini-LED mainstream:</strong> Q10M Ultra brings premium tech to real prices</li>
+                            <li><strong>Vertical integration:</strong> TCL makes its own panels (TCL CSOT)</li>
+                            <li><strong>#1 positions:</strong> Leading Mini LED and ultra-large TV globally</li>
+                        </ol>
+                        <div class="question">"When does X11L ship to US and at what price?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Sony Honda Mobility -->
+            <div class="company-card" data-hall="central">
+                <div class="company-header central" onclick="toggleCard(this)">
+                    <div class="company-title">
+                        <h3>8. Sony Honda Mobility (AFEELA)</h3>
+                        <span class="meta">Automotive | <span class="booth">Booth 20800</span></span>
+                    </div>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+                <div class="company-content">
+                    <div class="content-section">
+                        <h4>What They Do</h4>
+                        <p>Joint venture between Sony and Honda (formed March 2022). Building the AFEELA luxury electric sedan merging entertainment with automotive.</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>CES 2026 Announcements</h4>
+                        <p><strong>AFEELA 1 Pre-Production Vehicles</strong></p>
+                        <ul>
+                            <li>Multiple vehicles in multiple colors</li>
+                            <li>Trial production at Honda's Ohio plant</li>
+                            <li>New "Quality Gate" inspection facility</li>
+                        </ul>
+                        <p><strong>NEW Concept Model</strong> - Details TBD until press conference</p>
+                    </div>
+                    <div class="content-section">
+                        <h4>AFEELA 1 Specifications</h4>
+                        <div class="table-wrapper">
+                            <table>
+                                <tr><td><strong>Starting Price</strong></td><td>$89,900 (Origin)</td></tr>
+                                <tr><td><strong>Top Trim</strong></td><td>$102,900 (Signature)</td></tr>
+                                <tr><td><strong>Range</strong></td><td>~300 miles EPA</td></tr>
+                                <tr><td><strong>Sensors</strong></td><td>40 total (18 cameras, 1 LiDAR, 9 radars)</td></tr>
+                                <tr><td><strong>Autonomy</strong></td><td>Level 3 capable</td></tr>
+                                <tr><td><strong>Delivery</strong></td><td>California, 2026</td></tr>
+                            </table>
+                        </div>
+                        <p><strong>PlayStation Remote Play (WORLD FIRST)</strong> - Stream PS5 games to car</p>
+                        <p><strong>Note:</strong> Intelligent Drive and Personal Agent active for first 3 years only</p>
+                    </div>
+                    <div class="talking-points">
+                        <h4>Key Talking Points</h4>
+                        <ol>
+                            <li><strong>Entertainment-first EV:</strong> PlayStation in the car is unique</li>
+                            <li><strong>Sony + Honda = credibility:</strong> Consumer electronics meets automotive</li>
+                            <li><strong>Premium positioning:</strong> $90K+ competes with Mercedes, BMW</li>
+                            <li><strong>Level 3 autonomy:</strong> Real hands-free driving</li>
+                            <li><strong>Ohio production:</strong> Made in America story</li>
+                            <li><strong>3-year feature limit:</strong> Subscription model coming?</li>
+                        </ol>
+                        <div class="question">"What happens after 3 years - subscription model?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Central Hall Tips -->
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h4>Time Management</h4>
+                    <ul>
+                        <li>20-30 min per major booth</li>
+                        <li>10-15 min for smaller stops</li>
+                        <li>Total route: 3-4 hours</li>
+                    </ul>
+                </div>
+                <div class="tip-card">
+                    <h4>Must-See Demos</h4>
+                    <ul>
+                        <li>LG CLOiD robot</li>
+                        <li>Hisense S6 FollowMe</li>
+                        <li>Sony/Honda AFEELA</li>
+                        <li>Shokz OpenSound</li>
+                    </ul>
+                </div>
+                <div class="tip-card">
+                    <h4>Big Themes</h4>
+                    <ul>
+                        <li>TV Brightness War (10K nits)</li>
+                        <li>Home Robots Are Here</li>
+                        <li>Entertainment + Mobility</li>
+                        <li>Four-Color Displays</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>CES 2026 Tour Guide | Prepared by Shelly Palmer</p>
+        <p>Last Updated: January 4, 2026</p>
+        <p><a href="https://www.shellypalmer.com" target="_blank">shellypalmer.com</a></p>
+    </footer>
+
+    <script>
+        // Toggle individual company card
+        function toggleCard(header) {
+            const card = header.parentElement;
+            card.classList.toggle('expanded');
+        }
+
+        // Toggle all cards in a section
+        function toggleAll(hall) {
+            const cards = document.querySelectorAll(`.company-card[data-hall="${hall}"]`);
+            const allExpanded = Array.from(cards).every(card => card.classList.contains('expanded'));
+
+            cards.forEach(card => {
+                if (allExpanded) {
+                    card.classList.remove('expanded');
+                } else {
+                    card.classList.add('expanded');
+                }
+            });
+
+            // Update button text
+            const btn = event.target;
+            if (allExpanded) {
+                btn.textContent = `Expand All ${hall === 'north' ? 'North' : 'Central'} Hall Details`;
+            } else {
+                btn.textContent = `Collapse All ${hall === 'north' ? 'North' : 'Central'} Hall Details`;
+            }
+        }
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                const navHeight = document.querySelector('.nav').offsetHeight;
+                const targetPosition = target.offsetTop - navHeight - 20;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
